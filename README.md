@@ -1,4 +1,17 @@
 # Getting Started with Create React App
+# npm install react-leaflet leaflet
+# npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+# PAQUETES QUE SE INSTALO
+npm -g create-react-app
+npm install react-bootstrap bootstrap
+npm i
+npm install vite
+
+# PAQUETES NECESARIOS
+expo install react-native-maps
+expo install @expo/vector-icons
+
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

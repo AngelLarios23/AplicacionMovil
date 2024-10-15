@@ -1,10 +1,13 @@
 .container {
+  position: fixed;
   flex: 1; /* Hace que el contenedor crezca y ocupe el espacio disponible */
   padding: 20px;
   box-sizing: border-box;
   border-radius: 1%; /* Redondea las esquinas */
   margin: 1%; /* Crea espacio alrededor del contenedor */
-  background: linear-gradient(135deg, #f8c1d1, #fbe7f1); /* Gradiente rosa suave */
+  background-color: #da9dc4;
+background-image: linear-gradient(62deg, #da9dc4 0%, #7131bf 100%);
+
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor del borde */
   width: 100%; /* Ajusta el ancho al 100% del contenedor padre */
   max-width: auto; /* Mantiene un ancho máximo típico de una app móvil */
@@ -13,14 +16,28 @@
   border: 10px solid #000; /* Aumenta el grosor del borde a 10px (ajusta según sea necesario) */
 }
 
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh; /* Asegura que el body ocupe toda la pantalla */
-  display: flex;
-  flex-direction: column; /* Para que los elementos hijos se distribuyan en columnas */
+header {
+  width: 100%;
+  background-color: #f2c3f6; /* Color de fondo oscuro */
+  color: #ffffff; /* Color del texto blanco */
+  text-align: center;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  padding: 3px 0;
+  border-bottom: 2px solid #f3cfd2; /* Borde inferior de color rosa */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+  position: relative; /* Para el posicionamiento de los elementos */
 }
+
+header h1 {
+  font-size: 2rem; /* Tamaño de fuente grande para el título */
+  margin: 0; /* Eliminar márgenes */
+  font-weight: bold; /* Negrita para el título */
+  letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+
+
+
 
 /* Mantén el footer fijo en la parte inferior */
 .abajo {
@@ -35,13 +52,49 @@ body {
 }
 
 /* Estructura principal de la página */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+}
+.body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.buttons{
+  max-width: 700px;
+  display: flex;
+  justify-content: space-around;
+}
+.buttons a{
+  text-decoration: none;
+  font-size: 30px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  background: #f2c3f6;
+  color: #000000;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+  transition: all .4s ease-in-out;
+}
+
+.buttons a:hover{
+  transform: scale(1.2);
+}
+
+
+
+/* final de boton */
 
 hr {
   margin: 10px;
 }
 
-p, h2, h1 {
+ h2{
   margin: 10px;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -63,14 +116,7 @@ h3 {
   padding: 15px;
 }
 
-header {
-  width: 100%;
-  background-color: rgb(26, 25, 25);
-  color: rgb(253, 253, 253);
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 20px 0;
-}
+
 
 li {
   list-style: none;
