@@ -1,19 +1,56 @@
-import './App.js';
+import './App.css';
 import 'leaflet/dist/leaflet.css'; // Importar los estilos de Leaflet
 import { MapContainer, TileLayer, Circle, Popup, Marker } from 'react-leaflet';
 import React, { useEffect, useState } from 'react';
 import L from 'leaflet'; // Importar Leaflet para el icono del marcador
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHouse, faMagnifyingGlass, faBook,faGraduationCap,  faComments, faUsers, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faGraduationCap, faComments, faUsers, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { type } from '@testing-library/user-event/dist/type';
 
 function App() {
   const [position, setPosition] = useState([21.8853, -102.2910]); // Posición inicial
   const [error, setError] = useState(null);
-  <MapContainer 
-          center={position} 
-          zoom={13} 
-          scrollWheelZoom={true} // Permitir desplazamiento con la rueda del ratón y táctil
-        ></MapContainer>
+  const [showAlert, setShowAlert] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  // Obtener la ubicación actual del usuario
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setPosition([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          setError(error.message);
+        }
+      );
+    }
+  }, []);
+
+  const handlePanicButtonClick = () => {
+    console.log('Botón de pánico presionado');
+    setShowAlert(true);
+    setCountdown(10); // Establece la cuenta atrás en 10 segundos
+    setIsButtonDisabled(true);
+
+    const audio = new Audio('voz.mp3'); // Asegúrate de que el archivo esté en public/voz/
+
+    audio.play();
+  };
+
+  useEffect(() => {
+    let timer;
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown(prev => prev - 1);
+      }, 1000);
+    } else if (countdown === 0) {
+      setIsButtonDisabled(false);
+      setShowAlert(false); // Cierra la alerta después de la cuenta atrás
+    }
+    return () => clearInterval(timer);
+  }, [countdown]);
 
   // Lista de lugares peligrosos
   const dangerousPlaces = [
@@ -31,23 +68,8 @@ function App() {
     { position: [21.8700, -102.3100], name: "Centro Deportivo", description: "Instalaciones deportivas con seguridad." }
   ];
 
-  // Obtener la ubicación actual del usuario
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setPosition([position.coords.latitude, position.coords.longitude]);
-        },
-        (error) => {
-          setError(error.message);
-        }
-      );
-    }
-  }, []);
-
   return (
     <div className="container">
-      <div>{/* MAPA */}
       <header>
         <h1>SheCurity</h1>
       </header>
@@ -58,7 +80,7 @@ function App() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
           />
-          
+
           <Marker position={position} icon={new L.Icon({
             iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
             shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
@@ -77,10 +99,10 @@ function App() {
             <Circle 
               key={index} 
               center={place.position} 
-              radius={200} // Ajusta el radio según necesites
-              color="red" // Color del borde en rojo
-              fillColor="red" // Color de relleno en rojo
-              fillOpacity={0.1} // Aumentar opacidad del relleno
+              radius={200} 
+              color="red" 
+              fillColor="red" 
+              fillOpacity={0.1}
             >
               <Popup>
                 <strong>{place.name}</strong><br />
@@ -94,10 +116,10 @@ function App() {
             <Circle 
               key={index} 
               center={place.position} 
-              radius={200} // Ajusta el radio según necesites
-              color="green" // Color del borde en verde
-              fillColor="green" // Color de relleno en verde
-              fillOpacity={0.1} // Aumentar opacidad del relleno
+              radius={200} 
+              color="green" 
+              fillColor="green" 
+              fillOpacity={0.1}
             >
               <Popup>
                 <strong>{place.name}</strong><br />
@@ -107,31 +129,45 @@ function App() {
           ))}
         </MapContainer>
       </main>
-      </div>
+
+      <br />
       <div className='body'> {/* Botones */}
         <section className='buttons'>
-
-        <a href="#">
+          <a href="#">
             <FontAwesomeIcon icon={faHouse} />
-        </a>
-{/* Colocar los links de las paginas que se vayan a utilizar */}
-        <a href="#">
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
-        </a>
+          </a>
+          <a href="#">
+            <FontAwesomeIcon icon={faGraduationCap} />
+          </a>
 
-        <a href="#">
-        <FontAwesomeIcon icon={faGraduationCap } />
-        </a>
+          <section className='buttonalert'>
+            <a href="#" onClick={handlePanicButtonClick}>
+              <FontAwesomeIcon icon={faCircleExclamation} />
+            </a>
+          </section>
 
-        <a href="#">
-        <FontAwesomeIcon icon={faComments} />
-        </a>
+          <a href="#">
+            <FontAwesomeIcon icon={faComments} />
+          </a>
 
-        <a href="#">
-        <FontAwesomeIcon icon={faUsers} />
-        </a>
+          <a href="#">
+            <FontAwesomeIcon icon={faUsers} />
+          </a>
+        </section>
 
-      </section>
+        {/* Sugerencia (toast) */}
+        {showAlert && (
+          <div className="alerta">
+            ¡Alerta de pánico activada! Comunica tu situación a alguien cercano.
+          </div>
+        )}
+
+        {/* Cuenta regresiva en un contenedor separado */}
+        {isButtonDisabled && (
+          <div className="countdown">
+            Esperar {countdown}s
+          </div>
+        )}
       </div>
     </div>
   );

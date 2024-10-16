@@ -81,6 +81,25 @@ header h1 {
   box-shadow: 2px 2px 5px rgba(0,0,0,.5);
   transition: all .4s ease-in-out;
 }
+.buttonalert a{
+  text-decoration: none;
+  font-size: 30px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  background: #c51c1c;
+  color: #000000;
+  border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba(0,0,0,.5);
+  transition: all .4s ease-in-out;
+}
+.buttonalert{
+  max-width: 700px;
+  display: flex;
+  justify-content: space-around;
+}
+
 
 .buttons a:hover{
   transform: scale(1.2);
@@ -123,4 +142,37 @@ li {
   font-size: 24px;
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
+}
+.countdown {
+  position: fixed; /* Fija la posición en la parte superior */
+  top: 20px; /* Ajusta la distancia desde la parte superior */
+  right: 20px; /* Ajusta la distancia desde el lado derecho */
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  z-index: 1000; /* Asegúrate de que esté en la parte superior */
+}
+
+.alerta {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  animation: fadeIn 0.5s, fadeOut 0.5s 3s; /* Agrega animación para aparecer y desaparecer */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
